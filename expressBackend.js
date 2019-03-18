@@ -1,15 +1,6 @@
 // nodemon expressBackend.js
 
 /*
-HTTP STATUS CODES TO USE:
-
-    200 - OK
-    400 - BAD REQUEST ERROR
-    404 - NOT FOUND
-    500 - INTERNAL SERVER ERROR
-*/
-
-/*
 TODO:
 - GET category/all => returns all categories as JSON
 - GET category/?id=1001 => returns the category with id 1001
@@ -29,7 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
 
 //FIND OUT WHAT THIS REALLY IS!
 app.use(function (req, res, next) {
@@ -115,6 +105,7 @@ app.post('/category', (req, res) => {
     });
 });
 
+// DELETE A CATEGORY
 app.delete('/category', (req, res) => {
     if (req.query.id) {
         const id = req.query.id;
