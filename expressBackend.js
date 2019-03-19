@@ -105,6 +105,7 @@ app.post('/category', (req, res) => {
     });
 });
 
+// DELETE A CATEGORY
 app.delete('/category', (req, res) => {
     const id = req.query.id;
     if (id) {
