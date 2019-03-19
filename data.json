@@ -33,25 +33,5 @@
     "id": 1012,
     "name": "Kaikista uusin",
     "budget": "1100"
-  },
-  {
-    "id": 1013,
-    "name": "Uusista uudempiakin uudempi",
-    "budget": "12345"
-  },
-  {
-    "id": 1014,
-    "name": "Uuusista uudempaakin uudeempien uusin",
-    "budget": "1234567"
-  },
-  {
-    "id": "10201",
-    "name": "asdasdasd",
-    "budget": 9000
-  },
-  {
-    "id": "222",
-    "name": "32323",
-    "budget": "ffff"
   }
 ]

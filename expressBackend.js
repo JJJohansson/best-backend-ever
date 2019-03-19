@@ -1,15 +1,6 @@
 // nodemon expressBackend.js
 
 /*
-HTTP STATUS CODES TO USE:
-
-    200 - OK
-    400 - BAD REQUEST ERROR
-    404 - NOT FOUND
-    500 - INTERNAL SERVER ERROR
-*/
-
-/*
 TODO:
 - GET category/all => returns all categories as JSON
 - GET category/?id=1001 => returns the category with id 1001
@@ -29,7 +20,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
 
 //FIND OUT WHAT THIS REALLY IS!
 app.use(function (req, res, next) {
@@ -116,14 +106,32 @@ app.post('/category', (req, res) => {
 });
 
 app.delete('/category', (req, res) => {
-    if (req.query.id) {
-        const id = req.query.id;
-        console.log(typeof id, id)
+    const id = req.query.id;
+    if (id) {
+        jsonfile.readFile(data)
+        .then((categories) => {
+            const newState = categories.filter((category) => category.id != id);
+            jsonfile.writeFile(data, newState, { spaces: 2 })
+            .then(() => {
+                res.writeHead(200, { 'Content-Type': 'text/plain' });
+                res.end(JSON.stringify(newState));
+            })
+            .catch((error) => {
+                console.log(error);
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end();
+            })
+        })
+        .catch((error) => {
+            console.log(error);
+            res.writeHead(500, { 'Content-Type': 'text/plain' });
+            res.end();
+        })
+    } else {
+        res.writeHead(400, { 'Content-Type': 'text/plain' });
+        res.end("Reading server side JSON file failed.\n" + "No ID supplied in query.");
     }
-
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    res.end('DELETE');
 });
 
-
+// listen port 3001 for connections
 app.listen(3001);
