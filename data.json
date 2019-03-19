@@ -22,16 +22,11 @@
   {
     "id": 1009,
     "name": "Uusi",
-    "budget": "600"
+    "budget": 600
   },
   {
     "id": 1011,
     "name": "Uusin",
-    "budget": "1000"
-  },
-  {
-    "id": 1012,
-    "name": "Kaikista uusin",
-    "budget": "1100"
+    "budget": 1000
   }
 ]

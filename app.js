@@ -1,19 +1,11 @@
-// nodemon expressBackend.js
-
-/*
-TODO:
-- GET category/all => returns all categories as JSON
-- GET category/?id=1001 => returns the category with id 1001
-- POST category => sent category added to the server's JSON file
-- DELETE category/?id=1001 => deletes the category with id 1001
-*/
+// nodemon app.js
 
 var bodyParser = require('body-parser');
 var jsonfile = require('jsonfile');
 var express = require('express');
 var app = express();
 
-const data = `${__dirname}\\data.json`;
+const file = `${__dirname}\\data.json`;
 
 // extract the entire body portion of an incoming request stream and exposes it on req.body
 app.use(bodyParser.json());
@@ -32,7 +24,7 @@ app.use(function (req, res, next) {
 
 // GET ALL CATEGORIES
 app.get('/category/all', (req, res) => {
-    jsonfile.readFile(data)
+    jsonfile.readFile(file)
     .then((categories) => {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify(categories));
@@ -45,15 +37,14 @@ app.get('/category/all', (req, res) => {
 
 // GET CATEGORY BY ID
 app.get('/category/', (req, res) => {
-    let id = req.query.id;
+    const id = req.query.id;
+    const limit = req.query.limit;
+    const above = req.query.above;
+
     if (id) {
-        jsonfile.readFile(data)
+        jsonfile.readFile(file)
         .then((categories) => {
-            let response;
-            //console.log(categories)
-            console.log(typeof id, id)
-            response = categories.filter(category => category.id == id);
-            console.log(response);
+            const response = categories.filter(category => category.id == id);
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(response));
         })
@@ -61,6 +52,30 @@ app.get('/category/', (req, res) => {
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end(error);
         })
+    } else if (limit) {
+        if (above === 'true') {
+            jsonfile.readFile(file)
+            .then((categories) => {
+                const response = categories.filter((category) => category.budget > limit);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(response));
+            })
+            .catch((error) => {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end(error);
+            });
+        } else {
+            jsonfile.readFile(file)
+            .then((categories) => {
+                const response = categories.filter((category) => category.budget < limit);
+                res.writeHead(200, { 'Content-Type': 'application/json' });
+                res.end(JSON.stringify(response));
+            })
+            .catch((error) => {
+                res.writeHead(500, { 'Content-Type': 'text/plain' });
+                res.end(error);
+            });
+        }
     } else {
         res.writeHead(400, { 'Content-Type': 'text/plain' });
         res.end("Reading server side JSON file failed.\n" + "No ID supplied in query.");
@@ -69,7 +84,7 @@ app.get('/category/', (req, res) => {
 
 // ADD A NEW CATEGORY
 app.post('/category', (req, res) => {
-    jsonfile.readFile(data)
+    jsonfile.readFile(file)
     .then((categories) => {
         let existingCategory = '';
         existingCategory = categories.find(category => category.id == req.body.id);
@@ -85,10 +100,9 @@ app.post('/category', (req, res) => {
         const budget = req.body.budget;
         const newItem = { id, name, budget };
 
-        console.log(categories)
         categories.push(newItem);
 
-        jsonfile.writeFile(data, categories, { spaces: 2})
+        jsonfile.writeFile(file, categories, { spaces: 2})
         .then(() => {
             console.log(categories);
             res.writeHead(200, { 'Content-Type': 'text/plain' });
@@ -109,22 +123,20 @@ app.post('/category', (req, res) => {
 app.delete('/category', (req, res) => {
     const id = req.query.id;
     if (id) {
-        jsonfile.readFile(data)
+        jsonfile.readFile(file)
         .then((categories) => {
             const newState = categories.filter((category) => category.id != id);
-            jsonfile.writeFile(data, newState, { spaces: 2 })
+            jsonfile.writeFile(file, newState, { spaces: 2 })
             .then(() => {
                 res.writeHead(200, { 'Content-Type': 'text/plain' });
                 res.end(JSON.stringify(newState));
             })
             .catch((error) => {
-                console.log(error);
                 res.writeHead(500, { 'Content-Type': 'text/plain' });
                 res.end();
             })
         })
         .catch((error) => {
-            console.log(error);
             res.writeHead(500, { 'Content-Type': 'text/plain' });
             res.end();
         })
