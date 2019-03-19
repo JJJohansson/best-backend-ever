@@ -1,0 +1,22 @@
+{
+  "name": "best-node-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heikunKeikun/best-backend-ever.git"
+  },
+  "author": "Janne Johansson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heikunKeikun/best-backend-ever/issues"
+  },
+  "homepage": "https://github.com/heikunKeikun/best-backend-ever#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
