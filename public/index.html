@@ -1,0 +1,23 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Authenticated</title>
+</head>
+
+<body>
+  <h1>You are authenticated!</h1>
+  <form>
+    <label>email </label><input type="text" size=20 id="email" /><br />
+    <label>pswd </label><input type="text" size=25 id="pswd" /><br />
+    <input type="button" value="LOG IN" onClick="submit" />
+  </form>
+  <script>
+    function submit(e) {
+      e.preventDefault();
+      console.log(e);
+    }
+  </script>
+</body>
+</html>

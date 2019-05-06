@@ -18,7 +18,10 @@
   "homepage": "https://github.com/heikunKeikun/best-backend-ever#readme",
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cors": "^2.8.5",
     "express": "^4.16.4",
+    "firebase": "^5.9.3",
+    "firebase-admin": "^7.2.0",
     "jsonfile": "^5.0.0"
   }
 }
