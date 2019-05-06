@@ -1,3 +1,3 @@
 # best-backend-ever
-## Practising node, express etc.
+Verifying firebase ID token sent from frontend
 Frontend: https://github.com/heikunKeikun/firebase-auth/
